@@ -26,6 +26,14 @@ class EntityManager(object):
         
         return return_value
     
+    def get_components(self, entity, components):
+        store = []
+        
+        for component in components:
+            store.append(self.get_component(entity, component))
+            
+        return store
+    
     def get_all_components_of_type(self, component):
         return self.components.get(component.__name__)
     
@@ -41,8 +49,10 @@ class EntityManager(object):
     
     def add_component(self, entity, component):
         self.components.setdefault(component.__name__, {})[entity] = component()
-        
-        return component
+    
+    def add_components(self, entity, components):
+        for component in components:
+            self.components.setdefault(component.__name__, {})[entity] = component()
     
     def create_entity(self):
         new_id = self.lowest_unassigned_entity_id 

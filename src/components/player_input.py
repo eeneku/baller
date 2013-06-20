@@ -9,8 +9,7 @@ class PlayerInput(component.Component):
         
         super(PlayerInput, self).__init__(*kwargs, **kwargs)
         
-        self.move_left = None
-        self.move_right = None
-        self.move_up = None
-        self.move_down = None
+        self.turn_left = None
+        self.turn_right = None
+        self.explode = None
         

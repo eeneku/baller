@@ -2,7 +2,7 @@
 
 from engine import system
 
-from components import position
+from components import transform
 from components import movement
 
 class MovementSystem(system.System):
@@ -18,7 +18,7 @@ class MovementSystem(system.System):
 
         if store:
             for entity, component in store.iteritems():
-                pos = self.entity_manager.get_component(entity, position.Position)
+                pos = self.entity_manager.get_component(entity, transform.Transform)
                 
                 if pos:
                     pos.x += component.x * dt

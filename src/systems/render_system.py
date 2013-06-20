@@ -3,7 +3,7 @@
 from engine import system
 
 from components import render
-from components import position
+from components import transform
 
 class RenderSystem(system.System):
     """ Render system. Draws an image on the screen. """
@@ -18,7 +18,7 @@ class RenderSystem(system.System):
 
         if store:
             for entity, component in store.iteritems():
-                pos = self.entity_manager.get_component(entity, position.Position)
+                pos = self.entity_manager.get_component(entity, transform.Transform)
                 
                 if pos:
                     component.image.blit(pos.x, pos.y)

@@ -8,7 +8,7 @@ from engine import system_manager
 
 from systems import render_system
 
-from components import position
+from components import transform
 from components import render
 
 class Game(scene.Scene):
@@ -36,13 +36,13 @@ class Game(scene.Scene):
     def init_entities(self):
         self.entity_player = self.entity_manager.create_entity()
         
-        self.entity_manager.add_component(self.entity_player, position.Position)
-        self.entity_manager.add_component(self.entity_player, render.Render)
+        self.entity_manager.add_components(self.entity_player, [transform.Transform, render.Render])
         
-        self.entity_manager.get_component(self.entity_player, position.Position).x = 399
-        self.entity_manager.get_component(self.entity_player, position.Position).y = 150
+        self.entity_manager.get_component(self.entity_player, transform.Transform).x = 399
+        self.entity_manager.get_component(self.entity_player, transform.Transform).y = 150
         self.entity_manager.get_component(self.entity_player, render.Render).image = self.gfx_player
         
+
     def init_systems(self):
         self.render_system = render_system.RenderSystem(self.entity_manager)
     
