@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+from pyglet import gl
+
 from engine import system
 
 from components import render
@@ -18,10 +20,16 @@ class RenderSystem(system.System):
 
         if store:
             for entity, component in store.iteritems():
-                pos = self.entity_manager.get_component(entity, transform.Transform)
+                transform_component = self.entity_manager.get_component(entity, transform.Transform)
                 
-                if pos:
-                    component.image.blit(pos.x, pos.y)
+                if transform_component:
+                    #gl.glLoadIdentity()
+                    gl.glPushMatrix()
+                    #gl.glTranslatef(transform_component.x, transform_component.y, 0.0)
+                    gl.glRotatef(transform_component.rotation, 0, 0, 1)
+                    gl.glScalef(transform_component.scale, transform_component.scale, 1.0)
+                    component.image.blit(transform_component.x, transform_component.y)
+                    gl.glPopMatrix()
     
     
     

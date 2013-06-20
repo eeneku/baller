@@ -12,5 +12,5 @@ class Transform(component.Component):
         self.x = 0
         self.y = 0
         self.rotation = 0
-        self.scale = 0
+        self.scale = 1
         

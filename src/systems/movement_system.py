@@ -18,11 +18,11 @@ class MovementSystem(system.System):
 
         if store:
             for entity, component in store.iteritems():
-                pos = self.entity_manager.get_component(entity, transform.Transform)
+                transform_component = self.entity_manager.get_component(entity, transform.Transform)
                 
-                if pos:
-                    pos.x += component.x * dt
-                    pos.y += component.y * dt
+                if transform_component:
+                    transform_component.x += component.x * dt
+                    transform_component.y += component.y * dt
     
     
     
