@@ -61,7 +61,8 @@ class Game(scene.Scene):
         self.entity_player = self.entity_manager.create_entity()
         self.entity_ball_spawner = self.entity_manager.create_entity()
         
-        self.entity_manager.add_components(self.entity_player, [transform.Transform, render.Render, player.Player, collidable.Collidable])
+        self.entity_manager.add_components(self.entity_player, [transform.Transform, render.Render, 
+                                                                player.Player, collidable.Collidable])
         self.entity_manager.add_component(self.entity_ball_spawner, ball_spawner.BallSpawner)
         
         self.entity_manager.get_component(self.entity_player, transform.Transform).x = 1280/2
@@ -69,6 +70,8 @@ class Game(scene.Scene):
         self.entity_manager.get_component(self.entity_player, player.Player).keys["turn_right"] = 65363
         self.entity_manager.get_component(self.entity_player, player.Player).keys["turn_left"] = 65361
         self.entity_manager.get_component(self.entity_player, render.Render).image = self.gfx_player
+        self.entity_manager.get_component(self.entity_player, collidable.Collidable).type = "player"
+        self.entity_manager.get_component(self.entity_player, collidable.Collidable).collision_distance = self.gfx_player.width / 2
         
         b_spawner = self.entity_manager.get_component(self.entity_ball_spawner, ball_spawner.BallSpawner)
         b_spawner.time_between_spawns = 1

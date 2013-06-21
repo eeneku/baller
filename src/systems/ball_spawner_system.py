@@ -12,6 +12,7 @@ from components import movement
 from components import transform
 from components import player
 from components import render
+from components import collidable
 
 class BallSpawnerSystem(system.System):
     """ Ball Spawner System. """
@@ -26,7 +27,6 @@ class BallSpawnerSystem(system.System):
         # The row below assumes that there will be only a one player component. 
         plr = self.entity_manager.get_all_components_of_type(player.Player)
         plr_ent = plr.keys()
-        #print(plr_ent[0])
         plr_trans = self.entity_manager.get_component(plr_ent[0], transform.Transform)
 
         if plr_trans and store:
@@ -37,7 +37,8 @@ class BallSpawnerSystem(system.System):
                     new_ball = self.entity_manager.create_entity()
                     
                     self.entity_manager.add_components(new_ball, [ball.Ball, movement.Movement, 
-                                                                  transform.Transform, render.Render])
+                                                                  transform.Transform, render.Render,
+                                                                  collidable.Collidable])
                     
                     trans = self.entity_manager.get_component(new_ball, transform.Transform)
                     
@@ -61,6 +62,11 @@ class BallSpawnerSystem(system.System):
                     rendr = self.entity_manager.get_component(new_ball, render.Render)
                     
                     rendr.image = component.ball_images["red_ball"]
+                    
+                    col = self.entity_manager.get_component(new_ball, collidable.Collidable)
+                    
+                    col.type = "ball"
+                    col.collision_distance = rendr.image.width / 2
                     
                     component.last_spawn = time.time()
                     

@@ -9,4 +9,6 @@ class Collidable(component.Component):
         
         super(Collidable, self).__init__(*kwargs, **kwargs)
 
+        self.type = None
         self.collided = False
+        self.collision_distance = 0
