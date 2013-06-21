@@ -25,10 +25,10 @@ class RenderSystem(system.System):
                 if transform_component:
                     #gl.glLoadIdentity()
                     gl.glPushMatrix()
-                    #gl.glTranslatef(transform_component.x, transform_component.y, 0.0)
+                    gl.glTranslatef(transform_component.x, transform_component.y, 0.0)
                     gl.glRotatef(transform_component.rotation, 0, 0, 1)
                     gl.glScalef(transform_component.scale, transform_component.scale, 1.0)
-                    component.image.blit(transform_component.x, transform_component.y)
+                    component.image.blit(0, 0)
                     gl.glPopMatrix()
     
     

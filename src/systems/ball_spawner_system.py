@@ -41,8 +41,8 @@ class BallSpawnerSystem(system.System):
                     
                     trans = self.entity_manager.get_component(new_ball, transform.Transform)
                     
-                    trans.x = random.choice([-32, 1292])
-                    trans.y = random.choice([-32, 758])
+                    trans.x = random.choice([-16, 1276])
+                    trans.y = random.choice([-16, 736])
                     #trans.x = 230
                     #trans.y = 342
                     
@@ -60,7 +60,7 @@ class BallSpawnerSystem(system.System):
                     
                     rendr = self.entity_manager.get_component(new_ball, render.Render)
                     
-                    rendr.image = component.ball_image
+                    rendr.image = component.ball_images["red_ball"]
                     
                     component.last_spawn = time.time()
                     

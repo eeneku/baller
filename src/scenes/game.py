@@ -35,11 +35,27 @@ class Game(scene.Scene):
         self.init_systems()
         
     def init_graphics(self):
+        self.gfx_bg = pyglet.image.load("gfx/bg.png")
+        
         self.gfx_player = pyglet.image.load("gfx/player.png")
+        self.gfx_player.anchor_x = self.gfx_player.width / 2
+        self.gfx_player.anchor_y = self.gfx_player.height / 2
+        
         self.gfx_blue_ball = pyglet.image.load("gfx/blue_ball.png")
+        self.gfx_blue_ball.anchor_x = self.gfx_blue_ball.width / 2
+        self.gfx_blue_ball.anchor_y = self.gfx_blue_ball.height / 2
+        
         self.gfx_red_ball = pyglet.image.load("gfx/red_ball.png")
+        self.gfx_red_ball.anchor_x = self.gfx_red_ball.width / 2
+        self.gfx_red_ball.anchor_y = self.gfx_red_ball.height / 2
+        
         self.gfx_yellow_ball = pyglet.image.load("gfx/yellow_ball.png")
+        self.gfx_yellow_ball.anchor_x = self.gfx_yellow_ball.width / 2
+        self.gfx_yellow_ball.anchor_y = self.gfx_yellow_ball.height / 2
+        
         self.gfx_green_ball = pyglet.image.load("gfx/green_ball.png")
+        self.gfx_green_ball.anchor_x = self.gfx_green_ball.width / 2
+        self.gfx_green_ball.anchor_y = self.gfx_green_ball.height / 2
         
     def init_entities(self):
         self.entity_player = self.entity_manager.create_entity()
@@ -48,14 +64,18 @@ class Game(scene.Scene):
         self.entity_manager.add_components(self.entity_player, [transform.Transform, render.Render, player.Player, collidable.Collidable])
         self.entity_manager.add_component(self.entity_ball_spawner, ball_spawner.BallSpawner)
         
-        self.entity_manager.get_component(self.entity_player, transform.Transform).x = 654
-        self.entity_manager.get_component(self.entity_player, transform.Transform).y = 150
+        self.entity_manager.get_component(self.entity_player, transform.Transform).x = 1280/2
+        self.entity_manager.get_component(self.entity_player, transform.Transform).y = 720/2
         self.entity_manager.get_component(self.entity_player, player.Player).keys["turn_right"] = 65363
         self.entity_manager.get_component(self.entity_player, player.Player).keys["turn_left"] = 65361
         self.entity_manager.get_component(self.entity_player, render.Render).image = self.gfx_player
         
-        self.entity_manager.get_component(self.entity_ball_spawner, ball_spawner.BallSpawner).ball_image = self.gfx_green_ball
-        self.entity_manager.get_component(self.entity_ball_spawner, ball_spawner.BallSpawner).time_between_spawns = 1
+        b_spawner = self.entity_manager.get_component(self.entity_ball_spawner, ball_spawner.BallSpawner)
+        b_spawner.time_between_spawns = 1
+        b_spawner.ball_images = {"green_ball" : self.gfx_green_ball,
+                                 "red_ball" : self.gfx_red_ball,
+                                 "yellow_ball" : self.gfx_yellow_ball,
+                                 "blue_ball" : self.gfx_blue_ball}
         
         
 
@@ -77,6 +97,7 @@ class Game(scene.Scene):
         self.system_manager.update(dt)
             
     def on_draw(self):
+        self.gfx_bg.blit(0, 0)
         self.render_system.on_draw()
 
                 

@@ -12,4 +12,4 @@ class BallSpawner(component.Component):
         self.last_spawn = 0
         self.time_between_spawns = 0
         
-        self.ball_image = None
+        self.ball_images = {}
