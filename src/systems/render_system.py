@@ -21,7 +21,7 @@ class RenderSystem(system.System):
         if store:
             for entity, component in store.iteritems():
                 transform_component = self.entity_manager.get_component(entity, transform.Transform)
-                
+
                 if transform_component:
                     #gl.glLoadIdentity()
                     gl.glPushMatrix()

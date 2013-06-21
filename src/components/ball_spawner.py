@@ -8,3 +8,8 @@ class BallSpawner(component.Component):
     def __init__(self, *args, **kwargs):
         
         super(BallSpawner, self).__init__(*kwargs, **kwargs)
+
+        self.last_spawn = 0
+        self.time_between_spawns = 0
+        
+        self.ball_image = None

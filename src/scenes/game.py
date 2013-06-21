@@ -8,10 +8,16 @@ from engine import system_manager
 
 from systems import render_system
 from systems import player_system
+from systems import movement_system
+from systems import ball_spawner_system
+from systems import ball_system
+from systems import collision_system
 
 from components import transform
 from components import render
 from components import player
+from components import collidable
+from components import ball_spawner
 
 class Game(scene.Scene):
     """ The main scene where most of the game is happening. """
@@ -37,21 +43,35 @@ class Game(scene.Scene):
         
     def init_entities(self):
         self.entity_player = self.entity_manager.create_entity()
+        self.entity_ball_spawner = self.entity_manager.create_entity()
         
-        self.entity_manager.add_components(self.entity_player, [transform.Transform, render.Render, player.Player])
+        self.entity_manager.add_components(self.entity_player, [transform.Transform, render.Render, player.Player, collidable.Collidable])
+        self.entity_manager.add_component(self.entity_ball_spawner, ball_spawner.BallSpawner)
         
-        self.entity_manager.get_component(self.entity_player, transform.Transform).x = 399
+        self.entity_manager.get_component(self.entity_player, transform.Transform).x = 654
         self.entity_manager.get_component(self.entity_player, transform.Transform).y = 150
         self.entity_manager.get_component(self.entity_player, player.Player).keys["turn_right"] = 65363
         self.entity_manager.get_component(self.entity_player, player.Player).keys["turn_left"] = 65361
-        self.entity_manager.get_component(self.entity_player, render.Render).image = self.gfx_player.get_texture()
+        self.entity_manager.get_component(self.entity_player, render.Render).image = self.gfx_player
+        
+        self.entity_manager.get_component(self.entity_ball_spawner, ball_spawner.BallSpawner).ball_image = self.gfx_green_ball
+        self.entity_manager.get_component(self.entity_ball_spawner, ball_spawner.BallSpawner).time_between_spawns = 1
+        
         
 
     def init_systems(self):
         self.render_system = render_system.RenderSystem(self.entity_manager)
         self.player_system = player_system.PlayerSystem(self.entity_manager, self.manager.engine.key_state)
+        self.movement_system = movement_system.MovementSystem(self.entity_manager)
+        self.ball_spawner_system = ball_spawner_system.BallSpawnerSystem(self.entity_manager)
+        self.ball_system = ball_system.BallSystem(self.entity_manager)
+        self.collision_system = collision_system.CollisionSystem(self.entity_manager)
         
         self.system_manager.add_system(self.player_system)
+        self.system_manager.add_system(self.collision_system)
+        self.system_manager.add_system(self.movement_system)
+        self.system_manager.add_system(self.ball_system)
+        self.system_manager.add_system(self.ball_spawner_system)
     
     def update(self, dt):
         self.system_manager.update(dt)

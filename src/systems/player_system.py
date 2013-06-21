@@ -24,10 +24,8 @@ class PlayerSystem(system.System):
 
                     if transform_component:
                         if self.keys[component.keys["turn_left"]]:
-                            print("left!")
                             transform_component.rotation += component.rotation_speed * dt
                         elif self.keys[component.keys["turn_right"]]:
-                            print("right!")
                             transform_component.rotation -= component.rotation_speed * dt
                             
     
