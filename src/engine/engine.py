@@ -16,6 +16,9 @@ class Engine(pyglet.window.Window):
         self.key_state = pyglet.window.key.KeyStateHandler()
         self.push_handlers(self.key_state)
         
+        pyglet.gl.glEnable(pyglet.gl.GL_BLEND)
+        pyglet.gl.glBlendFunc(pyglet.gl.GL_SRC_ALPHA, pyglet.gl.GL_ONE_MINUS_SRC_ALPHA)
+        
         pyglet.clock.schedule_interval(self.update, 1/120.0)
         
     def run(self):
