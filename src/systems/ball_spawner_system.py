@@ -27,7 +27,7 @@ class BallSpawnerSystem(system.System):
 
         plr, plr_trans = self.entity_manager.get_all_components_of_types([Player, Transform])
         
-        for entity, bspwnr in bspwnr_components.iteritems():
+        for bspwnr in bspwnr_components:
             if time.time() - bspwnr.last_spawn > bspwnr.time_between_spawns:
                     
                 new_ball = self.entity_manager.create_entity()

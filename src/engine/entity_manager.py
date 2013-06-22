@@ -35,7 +35,7 @@ class EntityManager(object):
         return store
     
     def get_all_components_of_type(self, component):
-        return self.components.get(component.__name__)
+        return self.components.get(component.__name__).values()
     
     def get_all_components_of_types(self, components):
         
