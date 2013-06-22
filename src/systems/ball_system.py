@@ -13,10 +13,10 @@ class BallSystem(system.System):
         self.entity_manager = entity_manager
     
     def update(self, dt):
-        store = self.entity_manager.get_all_components_of_type(ball.Ball)
-
+        store = self.entity_manager.get_all_components_of_types([ball.Ball])
+        
         if store:
-            for entity, component in store.iteritems():
+            for components in store:
                 pass
     
     

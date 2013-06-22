@@ -6,13 +6,13 @@ import math
 
 from engine import system
 
-from components import ball_spawner
-from components import ball
-from components import movement
-from components import transform
-from components import player
-from components import render
-from components import collidable
+from components import BallSpawner
+from components import Ball
+from components import Movement
+from components import Transform
+from components import Player
+from components import Render
+from components import Collidable
 
 class BallSpawnerSystem(system.System):
     """ Ball Spawner System. """
@@ -23,52 +23,44 @@ class BallSpawnerSystem(system.System):
         self.entity_manager = entity_manager
     
     def update(self, dt):
-        store = self.entity_manager.get_all_components_of_type(ball_spawner.BallSpawner)
-        # The row below assumes that there will be only a one player component. 
-        plr = self.entity_manager.get_all_components_of_type(player.Player)
-        plr_ent = plr.keys()
-        plr_trans = self.entity_manager.get_component(plr_ent[0], transform.Transform)
+        bspwnr_components = self.entity_manager.get_all_components_of_type(BallSpawner)
 
-        if plr_trans and store:
-            for entity, component in store.iteritems():
-
-                if time.time() - component.last_spawn > component.time_between_spawns:
+        plr, plr_trans = self.entity_manager.get_all_components_of_types([Player, Transform])
+        
+        for entity, bspwnr in bspwnr_components.iteritems():
+            if time.time() - bspwnr.last_spawn > bspwnr.time_between_spawns:
                     
-                    new_ball = self.entity_manager.create_entity()
+                new_ball = self.entity_manager.create_entity()
                     
-                    self.entity_manager.add_components(new_ball, [ball.Ball, movement.Movement, 
-                                                                  transform.Transform, render.Render,
-                                                                  collidable.Collidable])
+                self.entity_manager.add_components(new_ball, [Ball, Movement, Transform, Render, Collidable])
                     
-                    trans = self.entity_manager.get_component(new_ball, transform.Transform)
+                trans = self.entity_manager.get_component(new_ball, Transform)
                     
-                    trans.x = random.choice([-16, 1276])
-                    trans.y = random.choice([-16, 736])
-                    #trans.x = 230
-                    #trans.y = 342
+                trans.x = random.choice([-16, 1276])
+                trans.y = random.choice([-16, 736])
                     
-                    move = self.entity_manager.get_component(new_ball, movement.Movement)
+                move = self.entity_manager.get_component(new_ball, Movement)
                     
-                    move.speed = 100
+                move.speed = 100
                     
-                    delta_x = plr_trans.x - trans.x
-                    delta_y = plr_trans.y - trans.y
+                delta_x = plr_trans[0].x - trans.x
+                delta_y = plr_trans[0].y - trans.y
                     
-                    angle = math.atan2(delta_y, delta_x) * 180 / math.pi
+                angle = math.atan2(delta_y, delta_x) * 180 / math.pi
                     
-                    move.x = move.speed * math.cos(math.radians(angle))
-                    move.y = move.speed * math.sin(math.radians(angle))
+                move.x = move.speed * math.cos(math.radians(angle))
+                move.y = move.speed * math.sin(math.radians(angle))
                     
-                    rendr = self.entity_manager.get_component(new_ball, render.Render)
+                rendr = self.entity_manager.get_component(new_ball, Render)
                     
-                    rendr.image = component.ball_images["red_ball"]
+                rendr.image = bspwnr.ball_images["red_ball"]
                     
-                    col = self.entity_manager.get_component(new_ball, collidable.Collidable)
+                col = self.entity_manager.get_component(new_ball, Collidable)
                     
-                    col.type = "ball"
-                    col.collision_distance = rendr.image.width / 2
+                col.type = "ball"
+                col.collision_distance = rendr.image.width / 2
                     
-                    component.last_spawn = time.time()
+                bspwnr.last_spawn = time.time()
                     
     
     

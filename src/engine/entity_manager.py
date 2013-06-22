@@ -37,6 +37,33 @@ class EntityManager(object):
     def get_all_components_of_type(self, component):
         return self.components.get(component.__name__)
     
+    def get_all_components_of_types(self, components):
+        
+        store = {}
+        # The method below is kinda poor. Should improve. 
+        # When you have found the required components and added them to store,
+        # you compare each keys length to this. If its the same,
+        # then you have one found a group. Otherwise you havent.
+        
+        components_required = len(components)
+        return_value = []
+        
+        for i in range(components_required):
+            return_value.append([])
+        
+        for component in components:
+            temp = self.components.get(component.__name__)
+            if temp:
+                for entity in temp:
+                    store.setdefault(entity, []).append(temp[entity])
+                
+        for entity in store:
+            if len(store[entity]) == components_required:
+                for i in range(components_required):
+                    return_value[i].append(store[entity][i])
+
+        return tuple(return_value)
+
     def get_all_entities_possessing_component(self, component):
         store = self.components.get(component.__name__)
         

@@ -2,8 +2,8 @@
 
 from engine import system
 
-from components import player
-from components import transform
+from components import Player
+from components import Transform
 
 class PlayerSystem(system.System):
     """ Player system. """
@@ -15,18 +15,14 @@ class PlayerSystem(system.System):
         self.keys = keys
     
     def update(self, dt):
-        if self.keys:
-            store = self.entity_manager.get_all_components_of_type(player.Player)
+        plr_components, trans_components = self.entity_manager.get_all_components_of_types([Player, Transform])
     
-            if store:
-                for entity, component in store.iteritems():
-                    transform_component = self.entity_manager.get_component(entity, transform.Transform)
-
-                    if transform_component:
-                        if self.keys[component.keys["turn_left"]]:
-                            transform_component.rotation += component.rotation_speed * dt
-                        elif self.keys[component.keys["turn_right"]]:
-                            transform_component.rotation -= component.rotation_speed * dt
+        for plr, trans in zip(plr_components, trans_components):
+            if self.keys:
+                if self.keys[plr.keys["turn_left"]]:
+                    trans.rotation += plr.rotation_speed * dt
+                elif self.keys[plr.keys["turn_right"]]:
+                    trans.rotation -= plr.rotation_speed * dt
                             
     
     

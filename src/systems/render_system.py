@@ -4,8 +4,8 @@ from pyglet import gl
 
 from engine import system
 
-from components import render
-from components import transform
+from components import Render
+from components import Transform
 
 class RenderSystem(system.System):
     """ Render system. Draws an image on the screen. """
@@ -16,20 +16,15 @@ class RenderSystem(system.System):
         self.entity_manager = entity_manager
     
     def on_draw(self):
-        store = self.entity_manager.get_all_components_of_type(render.Render)
-
-        if store:
-            for entity, component in store.iteritems():
-                transform_component = self.entity_manager.get_component(entity, transform.Transform)
-
-                if transform_component:
-                    #gl.glLoadIdentity()
-                    gl.glPushMatrix()
-                    gl.glTranslatef(transform_component.x, transform_component.y, 0.0)
-                    gl.glRotatef(transform_component.rotation, 0, 0, 1)
-                    gl.glScalef(transform_component.scale, transform_component.scale, 1.0)
-                    component.image.blit(0, 0)
-                    gl.glPopMatrix()
+        rendr_components, trans_components = self.entity_manager.get_all_components_of_types([Render, Transform])
+        
+        for render, trans in zip(rendr_components, trans_components):
+            gl.glPushMatrix()
+            gl.glTranslatef(trans.x, trans.y, 0.0)
+            gl.glRotatef(trans.rotation, 0, 0, 1)
+            gl.glScalef(trans.scale, trans.scale, 1.0)
+            render.image.blit(0, 0)
+            gl.glPopMatrix()
     
     
     

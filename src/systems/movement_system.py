@@ -2,8 +2,8 @@
 
 from engine import system
 
-from components import transform
-from components import movement
+from components import Transform
+from components import Movement
 
 class MovementSystem(system.System):
     """ Movement system. Moves the entity around. """
@@ -14,15 +14,11 @@ class MovementSystem(system.System):
         self.entity_manager = entity_manager
     
     def update(self, dt):
-        store = self.entity_manager.get_all_components_of_type(movement.Movement)
+        move_components, trans_components = self.entity_manager.get_all_components_of_types([Movement, Transform])
 
-        if store:
-            for entity, component in store.iteritems():
-                transform_component = self.entity_manager.get_component(entity, transform.Transform)
-                
-                if transform_component:
-                    transform_component.x += component.x * dt
-                    transform_component.y += component.y * dt
+        for move, trans in zip(move_components, trans_components):
+            trans.x += move.x * dt
+            trans.y += move.y * dt
     
     
     
