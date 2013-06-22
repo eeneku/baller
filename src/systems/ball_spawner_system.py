@@ -47,6 +47,9 @@ class BallSpawnerSystem(system.System):
                 delta_y = plr_trans[0].y - trans.y
                     
                 angle = math.atan2(delta_y, delta_x) * 180 / math.pi
+                
+                ball = self.entity_manager.get_component(new_ball, Ball)
+                ball.angle = angle
                     
                 move.x = move.speed * math.cos(math.radians(angle))
                 move.y = move.speed * math.sin(math.radians(angle))

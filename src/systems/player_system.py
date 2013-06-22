@@ -21,9 +21,14 @@ class PlayerSystem(system.System):
             if self.keys:
                 if self.keys[plr.keys["turn_left"]]:
                     trans.rotation += plr.rotation_speed * dt
+                    
+                    if trans.rotation >= 360:
+                        trans.rotation -= 360
                 elif self.keys[plr.keys["turn_right"]]:
                     trans.rotation -= plr.rotation_speed * dt
-                            
+                    
+                    if trans.rotation < 0:
+                        trans.rotation += 360
     
     
     

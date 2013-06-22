@@ -11,3 +11,5 @@ class Ball(component.Component):
         
         self.type = None
         self.attached = False
+        self.distance_to_player = 0
+        self.angle = 0
