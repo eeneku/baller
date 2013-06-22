@@ -7,7 +7,7 @@ class Collidable(component.Component):
 
     def __init__(self, *args, **kwargs):
         
-        super(Collidable, self).__init__(*kwargs, **kwargs)
+        super(Collidable, self).__init__(*args, **kwargs)
 
         self.type = None
         self.collided = False

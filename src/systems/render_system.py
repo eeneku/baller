@@ -23,7 +23,7 @@ class RenderSystem(system.System):
             gl.glTranslatef(trans.x, trans.y, 0.0)
             gl.glRotatef(trans.rotation, 0, 0, 1)
             gl.glScalef(trans.scale, trans.scale, 1.0)
-            render.image.blit(0, 0)
+            render.image.blit(trans.anchor_x, trans.anchor_y)
             gl.glPopMatrix()
     
     

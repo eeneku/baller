@@ -17,8 +17,9 @@ class MovementSystem(system.System):
         move_components, trans_components = self.entity_manager.get_all_components_of_types([Movement, Transform])
 
         for move, trans in zip(move_components, trans_components):
-            trans.x += move.x * dt
-            trans.y += move.y * dt
+            if move.moving:
+                trans.x += move.x * dt
+                trans.y += move.y * dt
     
     
     

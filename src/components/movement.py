@@ -7,9 +7,10 @@ class Movement(component.Component):
 
     def __init__(self, *args, **kwargs):
         
-        super(Movement, self).__init__(*kwargs, **kwargs)
+        super(Movement, self).__init__(*args, **kwargs)
         
         self.x = 0
         self.y = 0
         self.direction = 0
         self.speed = 0
+        self.moving = True

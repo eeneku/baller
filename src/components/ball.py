@@ -7,7 +7,7 @@ class Ball(component.Component):
 
     def __init__(self, *args, **kwargs):
         
-        super(Ball, self).__init__(*kwargs, **kwargs)
+        super(Ball, self).__init__(*args, **kwargs)
         
         self.type = None
         self.attached = False

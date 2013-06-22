@@ -7,7 +7,7 @@ class Player(component.Component):
 
     def __init__(self, *args, **kwargs):
         
-        super(Player, self).__init__(*kwargs, **kwargs)
+        super(Player, self).__init__(*args, **kwargs)
         
         self.keys = {"turn_left": None,
                      "turn_right": None,

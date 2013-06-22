@@ -2,7 +2,9 @@
 
 from engine import system
 
-from components import ball
+from components import Ball
+from components import Collidable
+from components import Movement
 
 class BallSystem(system.System):
     """ Ball System. """
@@ -13,11 +15,18 @@ class BallSystem(system.System):
         self.entity_manager = entity_manager
     
     def update(self, dt):
-        store = self.entity_manager.get_all_components_of_types([ball.Ball])
+        ball_components, col_components, move_components = self.entity_manager.get_all_components_of_types([Ball, 
+                                                                                                            Collidable,
+                                                                                                            Movement])
         
-        if store:
-            for components in store:
-                pass
+        for ball, col, move in zip(ball_components, col_components, move_components):
+            #print(col.collided)
+            if col.collided:
+                
+                move.moving = False
+            else:
+                move.moving = True
+            
     
     
     

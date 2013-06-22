@@ -75,11 +75,11 @@ class EntityManager(object):
         return return_value
     
     def add_component(self, entity, component):
-        self.components.setdefault(component.__name__, {})[entity] = component()
+        self.components.setdefault(component.__name__, {})[entity] = component(entity)
     
     def add_components(self, entity, components):
         for component in components:
-            self.components.setdefault(component.__name__, {})[entity] = component()
+            self.components.setdefault(component.__name__, {})[entity] = component(entity)
     
     def create_entity(self):
         new_id = self.lowest_unassigned_entity_id 
